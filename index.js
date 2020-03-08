@@ -51,57 +51,66 @@ function promptUser(){
 }
 
 function makeMD(answer,data){
-    return `
-    # ${answer.projName}
-    [![Github license] (https://img.shields.io/badge/license-${answer.projLicense}-brightgreen.svg)] 
-    (https://github.com/zmo2/mdCreator)
-        
-    ## Description
-    ${answer.projDesc}
+return `
+# ${answer.projName}
+[![Github license](https://img.shields.io/badge/license-${answer.projLicense}-brightgreen.svg)](https://github.com/zmo2/mdCreator)
     
-    ## Table of Contents
-    
-    *[Installation] (#Installation)
-    *[Usage] (#Usage)
-    *[License] (#License)
-    *[Contributing] (#Contributing)
-    *[Tests] (#Tests)
-    *[Questions] (#Questions)
+## Description 
 
-    ## Installation:
-    To install neccessary dependencies, run the following command:
+${answer.projDesc}
 
-       ${answer.cmdInstall}
-    
-    ## Usage
+## Table of Contents
 
-       ${answer.userNTK}
+*[Installation](#Installation)
 
-    ## License
-    This project is licensed under the ${answer.projLicense} license.
+*[Usage](#Usage)
 
-    ## Contributing
-    ${answer.userContribute}
+*[License](#License)
 
-    ## Tests
-    To run tests, run the following command:
+*[Contributing](#Contributing)
+
+*[Tests](#Tests)
+
+*[Questions](#Questions)
+
+## Installation:
+To install neccessary dependencies, run the following command:
+
+    ${answer.cmdInstall}
+
+## Usage
+
+${answer.userNTK}
+
+## License
+
+This project is licensed under the ${answer.projLicense} license.
+
+## Contributing
+
+${answer.userContribute}
+
+## Tests
+
+To run tests, run the following command:
+
     ${answer.cmdTest}
 
-    ## Questions
-    <img src="${data.avatar_url}" alt="avatar" style="border-radius:16px" width="30"/>
+## Questions
 
-    If you hae questions about the repo, please contact [${answer.username}] (https://github.com/${answer.username}) directly. 
+<img src="${data.avatar_url}" alt="avatar" style="border-radius:16px" width="30"/>
 
-    `
+If you hae questions about the repo, please contact [${answer.username}](https://github.com/${answer.username}) directly. 
+
+`
 }
 
 async function init(){
     try{
         const answer = await promptUser()
         const {data} = await axios.get(`https://api.github.com/users/${answer.username}`)
-        console.log(data.avatar_url)
         const mkMD = makeMD(answer,data)
-        await writeFileAsync("readme.md", mkMD)
+        await writeFileAsync("README.md", mkMD)
         console.log("successfully wrote to readme.md")
     }
     catch(err){
